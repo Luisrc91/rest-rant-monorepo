@@ -8,11 +8,8 @@ import { CurrentUser } from "../contexts/CurrentUser";
 function PlaceDetails() {
 
 	const { placeId } = useParams()
-
 	const history = useHistory()
-
-	const { currentUser } = useContext(CurrentUser)
-
+	// const { currentUser } = useContext(CurrentUser)
 	const [place, setPlace] = useState(null)
 
 	useEffect(() => {
@@ -55,8 +52,8 @@ function PlaceDetails() {
 		const response = await fetch(`http://localhost:5000/places/${place.placeId}/comments`, {
 			method: 'POST',
 			headers: {
+				'Authorization': `Bearer ${localStorage.getItem('token')}`,
 				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${localStorage.getItem('token')}`
 			},
 			body: JSON.stringify(commentAttributes)
 		})

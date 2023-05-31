@@ -1,45 +1,41 @@
-import { useContext, useState } from "react";
-import { useHistory } from "react-router";
-import { CurrentUser } from "../contexts/CurrentUser";
+import { useContext, useState } from "react"
+import { useHistory } from "react-router"
+import { CurrentUser } from "../contexts/CurrentUser"
 
 function LoginForm() {
-  const history = useHistory();
 
-  const { setCurrentUser } = useContext(CurrentUser);
+    const history = useHistory()
 
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
+    const { setCurrentUser } = useContext(CurrentUser)
 
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-    
-    const response = await fetch(`http://localhost:5000/authentication/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
+    const [credentials, setCredentials] = useState({
+        email: '',
+        password: ''
     })
 
+    const [errorMessage, setErrorMessage] = useState(null)
 
-    const data = await response.json();
+    async function handleSubmit(e) {
+        e.preventDefault()
+       
+        const response = await fetch('http://localhost:5000/authentication/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
 
-    if (response.status === 200) {
-      setCurrentUser(data.user);
-      localStorage.setItem("token", data.token);
-      // console.log(data.token);
-      history.push("/");
-    } else {
-      setErrorMessage(data.message);
+        const data = await response.json()
+
+        if (response.status === 200) {
+            setCurrentUser(data.user)
+            localStorage.setItem('token', data.token)
+            history.push('/')
+        } else {
+            setErrorMessage(data.message)
+        }
     }
-
-    // console.log(data);
-  }
-
   return (
     <main>
       <h1>Login</h1>

@@ -75,9 +75,7 @@ router.delete("/:placeId", async (req, res) => {
       },
     });
     if (!place) {
-      res
-        .status(404)
-        .json({ message: `Could not find place with id "${placeId}"` });
+      res.status(404).json({ message: `Could not find place with id "${placeId}"` });
     } else {
       await place.destroy();
       res.json(place);
@@ -95,26 +93,24 @@ router.post("/:placeId/comments", async (req, res) => {
   });
 
   if (!place) {
-    return res
-      .status(404)
-      .json({ message: `Could not find place with id "${placeId}"` });
+    return res.status(404).json({ message: `Could not find place with id "${placeId}"` });
   }
 
-  let currentUser;
-  try {
-    const [method, token] = req.headers.authorization.split(" ");
-    if (method == "Bearer") {
-      const result = await jwt.decode(process.env.JWT_SECRET, token);
-      const { id } = result.value;
-      currentUser = await User.findOne({
-        where: {
-          userId: id,
-        },
-      });
-    }
-  } catch {
-    currentUser = null;
-  }
+//   let currentUser;
+//   try {
+//     const [method, token] = req.headers.authorization.split(" ");
+//     if (method == "Bearer") {
+//       const result = await jwt.decode(process.env.JWT_SECRET, token);
+//       const { id } = result.value;
+//       currentUser = await User.findOne({
+//         where: {
+//           userId: id,
+//         },
+//       });
+//     }
+//   } catch {
+//     currentUser = null;
+//   }
 
   if (!req.currentUser) {
     return res.status(404).json({

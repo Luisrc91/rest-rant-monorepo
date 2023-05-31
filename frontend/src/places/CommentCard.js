@@ -20,7 +20,9 @@ function CommentCard({ comment, onDelete }) {
             <h2 className="rant">{comment.rant ? 'Rant! 😡' : 'Rave! 😻'}</h2>
             <h4>{comment.content}</h4>
             <h3>
-                <strong>- {comment.author.firstName} {comment.author.lastName}</strong>
+                <strong>- {comment.author.firstName}
+                 {comment.author.lastName}
+                 </strong>
             </h3>
             <h4>Rating: {comment.stars}</h4>
             {deleteButton}
